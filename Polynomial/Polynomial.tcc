@@ -23,23 +23,26 @@ Polynomial::Polynomial(int numOfTerm){
 Polynomial::Polynomial(Polynomial& other){
 	start = nullptr;
 	numOfTerms = other.numOfTerms;
-    Node<Terms> *copy , *current ;
+    Node<Terms> *copy , *current , *prev;
     current = other.start;
+
     int i = 0 ;
     while(i < other.numOfTerms){
         copy = new Node<Terms>;
         if (start == nullptr){
             copy->setData(current->getData());
-            copy->setNext(current->getNext());
-            start = current ;
+            copy->setNext(nullptr);
+            start = prev = copy;
             current = current->getNext();
             i = i+1;
             continue;
         }
+
         copy->setData(current->getData());
-        copy->setNext(current->getNext());
+        copy->setNext(nullptr);
+        prev->setNext(copy);
+        prev = copy;
         current = current->getNext();
-        
         i = i+1;
     }
 }
@@ -54,9 +57,7 @@ Polynomial::Polynomial(Polynomial&& other){
  
 
 Polynomial& Polynomial :: operator = (Polynomial& other){
-    //cout << "Inside =&"<<endl;
-    //cout<<other.start->getData()<<" : B"<<endl;
-    //cout << other <<endl;
+    // cout << "Inside =& :"<< other << endl;
     Node <Terms> *t = start;
     // while (start != nullptr){
     //     start = start->getNext();
@@ -67,36 +68,38 @@ Polynomial& Polynomial :: operator = (Polynomial& other){
 	start = nullptr;
 	numOfTerms = other.numOfTerms;
     // cout<< other.numOfTerms <<" : NO "<< endl;
-    Node<Terms> *copy = nullptr , *current = nullptr ;
+    Node<Terms> *copy , *current , *prev;
     current = other.start;
 
     //cout<<other.start->getData()<<" : C"<<endl;
     //cout<<other<<endl;
     int i = 0 ;
     while(i < other.numOfTerms){
-        //cout << "Inside W"<<endl;
         //cout << current->getData() <<endl; 
         copy = new Node<Terms>;
         if (start == nullptr){
             copy->setData(current->getData());
-            copy->setNext(current->getNext());
-            start = current ;
+            copy->setNext(nullptr);
+            start = prev = copy;
             current = current->getNext();
             i = i+1;
             continue;
         }
+
         copy->setData(current->getData());
-        copy->setNext(current->getNext());
+        copy->setNext(nullptr);
+        prev->setNext(copy);
+        prev = copy;
         current = current->getNext();
         i = i+1;
     }
-    //cout <<"Exiting =&"<<endl;
+    // cout <<"Exiting =&"<< endl;
 	return *this; 
 }
 
 
 Polynomial& Polynomial:: operator = (Polynomial&& other){
-    //cout << "Exiting =&&"<<endl;
+    cout << "Exiting =&&"<<endl;
     if (start != nullptr)
         delete start;
 	start = other.start;
@@ -210,50 +213,51 @@ Node<Terms>& Polynomial:: operator[](int i){
 
 Polynomial& Polynomial:: updatePolynomial(function<int(int,int)> add ,function<int(int,int)> mul, Node<Terms> T, Polynomial& P1){
     Polynomial *P = new Polynomial();
+    //cout << "updatePolynomial : "<<P1 <<endl;
     *P = P1;
     Node<Terms>* t ;
     t = P->start;
     int i = 0;
-    cout <<"p1 : "<< *P <<endl;
+    //cout <<"p1 : "<< *P <<endl;
     while(t){
         //cout << t->getData() << "  : t"<<endl;
         t->getData().setCoefficient(mul(T.getData().getCoefficient() , t->getData().getCoefficient()));
         t->getData().setExponent(add(T.getData().getExponent() , t->getData().getExponent()));
-        cout << t->getData() << "  : t"<<endl;
+        //cout << t->getData() << "  : t"<<endl;
         t = t->getNext();
         i++;
     }
-    cout << *P <<endl;
-    cout << P1 <<endl;
-    cout << "Exiting from update" <<endl;
+    //cout << "Exiting from update" <<endl;
     return *P;
 }
 
 void Polynomial::multiply(Polynomial& P1 , Polynomial& P2){
-    cout << "\nEntry P1 :"<<P1 <<endl;
-    cout << "\nEntry P2 :"<<P2 <<endl;
+    // cout << "\nEntry P1 :"<<P1 <<endl;
+    // cout << "\nEntry P2 :"<<P2 <<endl;
     auto add= [](int a , int b){return a+b;};
     auto mul= [](int a , int b){return a*b;};
 
-    Polynomial P, result;
+    Polynomial result;
     Node<Terms>* t ;
     t = P1.start;
     int i = 0;
     while(t!= nullptr){
-        cout<< t->getData()<<endl;
+
+        Polynomial P;
         P = updatePolynomial(add , mul, t->getData(),P2);
-        cout << "\nAfter Update:"<<P2 <<endl;
-        cout << P << endl;
-        cout<<"before this"<<endl;
+        //cout << "\nAfter Update:"<<P2 <<endl;
+        //cout << P << endl;
+        //cout<< *this <<endl;
         *this = *this + P;
-        cout<< *this <<endl;
-        cout<<"After this"<<endl;
+        //cout<<"After this"<<endl;
+        //cout<< *this <<endl;
+        
         t = t->getNext();
         i++;
     }
 
-    cout << "\nExit P1 :"<<P1 <<endl;
-    cout << "\nExit P2 :"<<P2 <<endl;
+    // cout << "\nExit P1 :"<<P1 <<endl;
+    // cout << "\nExit P2 :"<<P2 <<endl;
 
 }
 void Polynomial::add(Polynomial& P1,Polynomial& P2){

@@ -5,7 +5,7 @@
 using namespace std;
 
 int main (){
-    
+
     int choice,termsCount1,termsCount2 , coeff , expo;
     while(true){
         cout<<"\n\n----------------***_______MENU______***------------------\n|\t\t\t\t\t\t\t|\n";
@@ -56,9 +56,9 @@ int main (){
                 P = P1 + P2;
 
                 cout<<"\n=====================***OUTPUT***=======================\n\n";
-                cout<<"\t\tP1 : "<<P1<<endl;
-                cout<<"\t\tP2 : "<<P2<<endl;
-                cout<<"\t\tP1 + P2 : "<<P<<endl;
+                cout<<"\t\tP1      :: "<<P1<<endl;
+                cout<<"\t\tP2      :: "<<P2<<endl;
+                cout<<"\t\tP1 + P2 :: "<<P<<endl;
                 cout<<"\n===================*************========================\n\n";
                 
                 break;
@@ -67,9 +67,9 @@ int main (){
 
                 P = P1 - P2;
                 cout<<"\n=====================***OUTPUT***=======================\n\n";
-                cout<<"\t\tP1 : "<<P1<<endl;
-                cout<<"\t\tP2 : "<<P2<<endl;
-                cout<<"\t\tP1 - P2 : "<<P<<endl;
+                cout<<"\t\tP1      :: "<<P1<<endl;
+                cout<<"\t\tP2      :: "<<P2<<endl;
+                cout<<"\t\tP1 - P2 :: "<<P<<endl;
                 cout<<"\n===================*************========================\n\n";
                 break;
             
@@ -77,9 +77,9 @@ int main (){
 
                 P = P1 * P2;
                 cout<<"\n=====================***OUTPUT***=======================\n\n";
-                cout<<"\t\tP1 : "<<P1<<endl;
-                cout<<"\t\tP2 : "<<P2<<endl;
-                cout<<"\t\tP1 * P2 : "<<P<<endl;
+                cout<<"\t\tP1      :: "<<P1<<endl;
+                cout<<"\t\tP2      :: "<<P2<<endl;
+                cout<<"\t\tP1 * P2 :: "<<P<<endl;
                 cout<<"\n===================*************========================\n\n";
                 break;
                 
